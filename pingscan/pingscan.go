@@ -21,13 +21,13 @@ package pingscan
 
 import (
 	"fmt"
+	"time"
 	"github.com/intelsdi-x/snap/control/plugin"
 	"github.com/intelsdi-x/snap/control/plugin/cpolicy"
 	"github.com/intelsdi-x/snap/core"
 	"github.com/intelsdi-x/snap/core/ctypes"
 	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/targets"
 	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/scan"
-	"time"
 )
 const (
 	vendor        = "niuk"
