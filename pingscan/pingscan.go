@@ -26,6 +26,7 @@ import (
 	"github.com/intelsdi-x/snap/core"
 	"github.com/intelsdi-x/snap/core/ctypes"
 	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/targets"
+	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/scan"
 	"strings"
 	"crypto/tls"
 	"io/ioutil"
@@ -62,7 +63,6 @@ func (pingscan *PingscanCollector) CollectMetrics(mts []plugin.MetricType) (metr
 	//var err error
 	var (
 		targets string
-	        hosts []string
 	)
 	conf := mts[0].Config().Table()
 	targetsConf, ok := conf["targets"]
@@ -72,20 +72,13 @@ func (pingscan *PingscanCollector) CollectMetrics(mts []plugin.MetricType) (metr
 		targets = targetsConf.(ctypes.ConfigValueStr).Value
 	}
 
-	if pathExists(targets) {
-		lines, err := readHosts(targets)
-		hosts = delete_empty(lines)
-		if err != nil {
-			if err != nil { return nil, fmt.Errorf("Error reading targets: %v", err) }
-		}
-	}
-
-
+	hosts, err := Targets(targets)
+	if err != nil { return nil, fmt.Errorf("Error reading targets: %v", err) }
 
 	for _, mt := range mts {
 		ns := mt.Namespace()
 
-		val, err := parseSessionInfo("total-up", htmlData)
+		val, err := Ping(hosts)
 		if err != nil {
 			return nil, fmt.Errorf("Error collecting metrics: %v", err)
 		}

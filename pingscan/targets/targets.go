@@ -1,11 +1,24 @@
-package pkg
+package targets
 
 import (
 	"os"
 	"bufio"
 )
 
-func delete_empty(s []string) []string {
+func Targets(targets string) ([]string, error) {
+	var hosts []string
+	if pathExists(targets) {
+		lines, err := readHosts(targets)
+		hosts = DeleteEmpty(lines)
+		if err != nil {
+			if err != nil { return nil, err }
+		}
+	}
+	return hosts, nil
+}
+
+
+func DeleteEmpty(s []string) []string {
 	var r []string
 	for _, str := range s {
 		if str != "" {
