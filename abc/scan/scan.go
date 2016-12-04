@@ -3,7 +3,7 @@ package scan
 import (
 	"os/exec"
 	"fmt"
-	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/targets"
+	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/abc/targets"
 )
 
 func Ping(hosts []string) int {

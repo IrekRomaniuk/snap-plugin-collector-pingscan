@@ -24,7 +24,7 @@ import (
 	//"github.com/intelsdi-x/snap-plugin-lib-go/v1/plugin"
 	"github.com/intelsdi-x/snap/control/plugin"
 	"os"
-	"pingscan"
+	"abc"
 )
 
 /*const (
@@ -33,5 +33,5 @@ import (
 )*/
 
 func main() {
-	plugin.Start(pinscan.Meta(), pingscan.New(), os.Args[1],)
+	plugin.Start(pinscan.Meta(), abc2.New(), os.Args[1],)
 }
