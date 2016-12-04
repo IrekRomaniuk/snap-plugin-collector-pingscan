@@ -3,7 +3,7 @@ package scan
 import (
 	"os/exec"
 	"fmt"
-	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/abc/targets"
+	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/targets"
 )
 
 func Ping(hosts []string) int {
@@ -23,7 +23,7 @@ func Ping(hosts []string) int {
 	//fmt.Println("sent: ", ip)
 	}
 	alives := <-doneChan
-	result := deleteEmpty(alives)
+	result := DeleteEmpty(alives)
 
 	fmt.Printf("%d/%d %d\n", len(result),len(hosts),concurrentMax)
 	return len(result)
@@ -31,7 +31,7 @@ func Ping(hosts []string) int {
 
 func sendingPing(pingChan <-chan string, pongChan chan <- string) {
 	for ip := range pingChan {
-		_, err := exec.Command("ping", "-c", 1, "-w", 1, ip).Output()
+		_, err := exec.Command("ping", "-c", "1", "-w", "1", ip).Output()
 		if err == nil {
 			pongChan <- ip
 			//fmt.Printf("%s is alive\n", ip)

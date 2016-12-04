@@ -20,18 +20,11 @@ limitations under the License.
 package main
 
 import (
-	"github.com/IrekRomaniuk/snap-plugin-collector-sessioninfo/sessioninfo"
-	//"github.com/intelsdi-x/snap-plugin-lib-go/v1/plugin"
+	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan"
 	"github.com/intelsdi-x/snap/control/plugin"
 	"os"
-	"abc"
 )
 
-/*const (
-	pluginName    = "pingscan"
-	pluginVersion = 1
-)*/
-
 func main() {
-	plugin.Start(pinscan.Meta(), abc2.New(), os.Args[1],)
+	plugin.Start(pingscan.Meta(), pingscan.New(), os.Args[1],)
 }
