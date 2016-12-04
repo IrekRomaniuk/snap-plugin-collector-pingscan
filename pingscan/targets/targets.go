@@ -5,10 +5,10 @@ import (
 	"bufio"
 )
 
-func Targets(targets string) ([]string, error) {
+func ReadTargets(target string) ([]string, error) {
 	var hosts []string
-	if pathExists(targets) {
-		lines, err := readHosts(targets)
+	if pathExists(target) {
+		lines, err := readHosts(target)
 		hosts = DeleteEmpty(lines)
 		if err != nil {
 			if err != nil { return nil, err }

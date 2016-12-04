@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package abc
+package pingscan
 
 import (
 	"fmt"
@@ -59,26 +59,26 @@ The output is the collected metrics as plugin.Metric and an error.
 func (pingscan *PingscanCollector) CollectMetrics(mts []plugin.MetricType) (metrics []plugin.MetricType, err error) {
 	//var err error
 	var (
-		targets string
+		target string
 	)
 	conf := mts[0].Config().Table()
-	targetsConf, ok := conf["targets"]
-	if !ok || targetsConf.(ctypes.ConfigValueStr).Value == "" {
-		return nil, fmt.Errorf("targets missing from config, %v", conf)
+	targetConf, ok := conf["targets"]
+	if !ok || targetConf.(ctypes.ConfigValueStr).Value == "" {
+		return nil, fmt.Errorf("target missing from config, %v", conf)
 	} else {
-		targets = targetsConf.(ctypes.ConfigValueStr).Value
+		target = targetConf.(ctypes.ConfigValueStr).Value
 	}
 
-	hosts, err := Targets(targets)
+	hosts, err := targets.ReadTargets(target)
 	if err != nil { return nil, fmt.Errorf("Error reading targets: %v", err) }
 
 	for _, mt := range mts {
 		ns := mt.Namespace()
 
-		val, err := Ping(hosts)
-		if err != nil {
+		val := scan.Ping(hosts)
+		/*if err != nil {
 			return nil, fmt.Errorf("Error collecting metrics: %v", err)
-		}
+		}*/
 		//fmt.Println(val)
 		metric := plugin.MetricType{
 			Namespace_: ns,
@@ -101,7 +101,7 @@ func (pingscan *PingscanCollector) CollectMetrics(mts []plugin.MetricType) (metr
 
 	The metrics returned will be advertised to users who list all the metrics and will become targetable by tasks.
 */
-func (pingscan *PingscaCollector) GetMetricTypes(cfg plugin.ConfigType) ([]plugin.MetricType, error) {
+func (pingscan *PingscanCollector) GetMetricTypes(cfg plugin.ConfigType) ([]plugin.MetricType, error) {
 	mts := []plugin.MetricType{}
 	for _, metricName := range metricNames {
 		mts = append(mts, plugin.MetricType{
