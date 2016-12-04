@@ -1,0 +1,12 @@
+version: 1
+schedule:
+  type: "simple"
+  interval: "30s"
+max-failures: 10
+workflow:
+  collect:
+    metrics:
+      /niuk/pingscan/total-up: {}
+    config:
+      /niuk/pingscan:
+        targets: "./pinglist.txt"
