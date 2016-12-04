@@ -30,7 +30,7 @@ import (
 )
 
 const (
-	targets = "./examples/pinglist.txt"
+	target = "./examples/pinglist.txt"
 )
 
 func TestPingscanPlugin(t *testing.T) {
@@ -64,9 +64,9 @@ func TestPingscanPlugin(t *testing.T) {
 				tables := conf.RulesAsTable()
 				So(len(tables), ShouldEqual, 1)
 				for _, rule := range tables {
-					So(rule.Name, ShouldBeIn, "targets")
+					So(rule.Name, ShouldBeIn, "target")
 					switch rule.Name {
-					case "targets":
+					case "target":
 						So(rule.Required, ShouldBeTrue)
 						So(rule.Type, ShouldEqual, "string")
 					}
@@ -76,6 +76,6 @@ func TestPingscanPlugin(t *testing.T) {
 	})
 }
 
-/*func TestTargets(t *testing.T) {
+/*func TestReadTargets(t *testing.T) {
 
 }*/
