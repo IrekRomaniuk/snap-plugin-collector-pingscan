@@ -27,9 +27,6 @@ import (
 	"github.com/intelsdi-x/snap/core/ctypes"
 	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/targets"
 	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/scan"
-	"strings"
-	"crypto/tls"
-	"io/ioutil"
 	"time"
 )
 const (
