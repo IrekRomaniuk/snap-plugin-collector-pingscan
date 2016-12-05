@@ -27,6 +27,7 @@ import (
 	//"github.com/intelsdi-x/snap/core/cdata"
 	//"github.com/intelsdi-x/snap/core/ctypes"
 	. "github.com/smartystreets/goconvey/convey"
+	"fmt"
 )
 
 const (
@@ -64,7 +65,8 @@ func TestPingscanPlugin(t *testing.T) {
 				tables := conf.RulesAsTable()
 				So(len(tables), ShouldEqual, 1)
 				for _, rule := range tables {
-					So(rule.Name, ShouldBeIn, "target")
+					fmt.Println(rule.Name)
+					So(rule.Name, ShouldEqual, "target") //ShouldBeIn if more rules
 					switch rule.Name {
 					case "target":
 						So(rule.Required, ShouldBeTrue)

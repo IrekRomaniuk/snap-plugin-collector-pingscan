@@ -57,12 +57,11 @@ GetMetricTypes() is started. The input will include a slice of all the metric ty
 The output is the collected metrics as plugin.Metric and an error.
 */
 func (pingscan *PingscanCollector) CollectMetrics(mts []plugin.MetricType) (metrics []plugin.MetricType, err error) {
-	//var err error
 	var (
 		target string
 	)
 	conf := mts[0].Config().Table()
-	targetConf, ok := conf["targets"]
+	targetConf, ok := conf["target"]
 	if !ok || targetConf.(ctypes.ConfigValueStr).Value == "" {
 		return nil, fmt.Errorf("target missing from config, %v", conf)
 	} else {
@@ -70,7 +69,7 @@ func (pingscan *PingscanCollector) CollectMetrics(mts []plugin.MetricType) (metr
 	}
 
 	hosts, err := targets.ReadTargets(target)
-	if err != nil { return nil, fmt.Errorf("Error reading targets: %v", err) }
+	if err != nil { return nil, fmt.Errorf("Error reading target: %v", err) }
 
 	for _, mt := range mts {
 		ns := mt.Namespace()
@@ -115,10 +114,10 @@ func (pingscan *PingscanCollector) GetMetricTypes(cfg plugin.ConfigType) ([]plug
 // GetConfigPolicy returns plugin configuration
 func (pingscan *PingscanCollector) GetConfigPolicy() (*cpolicy.ConfigPolicy, error) {
 	c := cpolicy.New()
-	rule0, _ := cpolicy.NewStringRule("targets", true)
+	rule0, _ := cpolicy.NewStringRule("target", true)
 	cp := cpolicy.NewPolicyNode()
 	cp.Add(rule0)
-	c.Add([]string{"niuk", "total-up"}, cp)
+	c.Add([]string{"niuk", "pingscan"}, cp)
 	return c, nil
 }
 

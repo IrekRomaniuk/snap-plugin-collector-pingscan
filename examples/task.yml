@@ -9,4 +9,4 @@ workflow:
       /niuk/pingscan/total-up: {}
     config:
       /niuk/pingscan:
-        targets: "./pinglist.txt"
+        target: "./pinglist.txt"
