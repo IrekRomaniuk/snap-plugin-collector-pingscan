@@ -27,7 +27,7 @@ import (
 	//"github.com/intelsdi-x/snap/core/cdata"
 	//"github.com/intelsdi-x/snap/core/ctypes"
 	. "github.com/smartystreets/goconvey/convey"
-	"fmt"
+	. "github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/targets"
 )
 
 const (
@@ -65,7 +65,6 @@ func TestPingscanPlugin(t *testing.T) {
 				tables := conf.RulesAsTable()
 				So(len(tables), ShouldEqual, 1)
 				for _, rule := range tables {
-					fmt.Println(rule.Name)
 					So(rule.Name, ShouldEqual, "target") //ShouldBeIn if more rules
 					switch rule.Name {
 					case "target":
@@ -78,6 +77,12 @@ func TestPingscanPlugin(t *testing.T) {
 	})
 }
 
-/*func TestReadTargets(t *testing.T) {
-
-}*/
+func TestReadTargets(t *testing.T) {
+	Convey("Read pinglist.txt from examples ", t, func() {
+	target := "..\\examples\\pinglist.txt"
+		hosts, _ := ReadTargets(target)
+		Convey("So pinglist.txt should contain 3 items", func() {
+			So(len(hosts), ShouldEqual,3)
+		})
+	})
+}
