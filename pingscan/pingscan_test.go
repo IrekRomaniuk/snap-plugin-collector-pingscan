@@ -109,7 +109,7 @@ func TestPingscanCollector_CollectMetrics(t *testing.T) {
 			metrics, err := p.CollectMetrics(mts)
 			So(err, ShouldBeNil)
 			So(metrics, ShouldNotBeNil)
-			So(len(metrics), ShouldEqual, 3)
+			So(len(metrics), ShouldEqual, 1)
 			So(metrics[0].Namespace()[0].Value, ShouldEqual, "niuk")
 			So(metrics[0].Namespace()[1].Value, ShouldEqual, "pingscan")
 			for _, m := range metrics {
