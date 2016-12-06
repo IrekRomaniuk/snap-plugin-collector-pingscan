@@ -25,7 +25,7 @@ func Ping(hosts []string) int {
 	alives := <-doneChan
 	result := targets.DeleteEmpty(alives)
 
-	fmt.Printf("\n%d/%d %d\n", len(result),len(hosts),concurrentMax)
+	//fmt.Printf("\n%d/%d %d\n", len(result),len(hosts),concurrentMax)
 	return len(result)
 }
 
