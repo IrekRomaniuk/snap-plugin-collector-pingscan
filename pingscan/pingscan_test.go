@@ -23,9 +23,9 @@ import (
 
 	"github.com/intelsdi-x/snap/control/plugin"
 	"github.com/intelsdi-x/snap/control/plugin/cpolicy"
-	//"github.com/intelsdi-x/snap/core"
-	//"github.com/intelsdi-x/snap/core/cdata"
-	//"github.com/intelsdi-x/snap/core/ctypes"
+	"github.com/intelsdi-x/snap/core"
+	"github.com/intelsdi-x/snap/core/cdata"
+	"github.com/intelsdi-x/snap/core/ctypes"
 	. "github.com/smartystreets/goconvey/convey"
 	. "github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/targets"
 )
@@ -86,3 +86,43 @@ func TestReadTargets(t *testing.T) {
 		})
 	})
 }
+
+func TestPingscanCollector_CollectMetrics(t *testing.T) {
+	cfg := setupCfg("../examples/pinglist.txt")
+	Convey("Pingscan collector", t, func() {
+		p := New()
+		mt, err := p.GetMetricTypes(cfg)
+		if err != nil {
+			t.Fatal(err)
+		}
+		So(len(mt), ShouldEqual, 1)
+		Convey("collect metrics", func() {
+			mts := []plugin.MetricType{
+				plugin.MetricType{
+					Namespace_: core.NewNamespace(
+						"niuk", "pingscan", "total-up"),
+					Config_: cfg.ConfigDataNode,
+				},
+			}
+			//fmt.Println(mts[0].Config().Table())
+			metrics, err := p.CollectMetrics(mts)
+			So(err, ShouldBeNil)
+			So(metrics, ShouldNotBeNil)
+			So(len(metrics), ShouldEqual, 1)
+			So(metrics[0].Namespace()[0].Value, ShouldEqual, "niuk")
+			So(metrics[0].Namespace()[1].Value, ShouldEqual, "pingscan")
+			for _, m := range metrics {
+				//fmt.Println(m.Namespace()[2].Value,m.Data())
+				So(m.Namespace()[2].Value, ShouldEqual, "total-up")
+				t.Log(m.Namespace()[2].Value, m.Data())
+			}
+		})
+	})
+}
+
+func setupCfg(target string) plugin.ConfigType {
+	node := cdata.NewNode()
+	node.AddItem("target", ctypes.ConfigValueStr{Value: target})
+	return plugin.ConfigType{ConfigDataNode: node}
+}
+
