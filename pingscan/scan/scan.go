@@ -7,7 +7,7 @@ import (
 )
 
 func Ping(hosts []string) int {
-	concurrentMax := 1
+	concurrentMax := 200
 	pingChan := make(chan string, concurrentMax)
 	pongChan := make(chan string, len(hosts))
 	doneChan := make(chan []string)
