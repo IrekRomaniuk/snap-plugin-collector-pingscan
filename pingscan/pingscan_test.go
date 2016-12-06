@@ -115,7 +115,7 @@ func TestPingscanCollector_CollectMetrics(t *testing.T) {
 			for _, m := range metrics {
 				fmt.Println(m.Namespace()[2].Value,m.Data())
 				So(m.Namespace()[2].Value, ShouldEqual, "total-up")
-				So(m.Data(), ShouldEqual, 2)
+				So(m.Data(), ShouldEqual, 2) //Assuming 8.8.8.8 and 4.2.2.2 are reachable
 				t.Log(m.Namespace()[2].Value, m.Data())
 			}
 		})
