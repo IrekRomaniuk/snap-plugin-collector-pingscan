@@ -28,7 +28,6 @@ import (
 	"github.com/intelsdi-x/snap/core/ctypes"
 	. "github.com/smartystreets/goconvey/convey"
 	. "github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/targets"
-	"fmt"
 )
 
 const (
@@ -113,7 +112,7 @@ func TestPingscanCollector_CollectMetrics(t *testing.T) {
 			So(metrics[0].Namespace()[0].Value, ShouldEqual, "niuk")
 			So(metrics[0].Namespace()[1].Value, ShouldEqual, "pingscan")
 			for _, m := range metrics {
-				fmt.Println(m.Namespace()[2].Value,m.Data())
+				//fmt.Println(m.Namespace()[2].Value,m.Data())
 				So(m.Namespace()[2].Value, ShouldEqual, "total-up")
 				So(m.Data(), ShouldEqual, 2) //Assuming 8.8.8.8 and 4.2.2.2 are reachable
 				t.Log(m.Namespace()[2].Value, m.Data())
