@@ -130,7 +130,7 @@ func Meta() *plugin.PluginMeta {
 		[]string{plugin.SnapGOBContentType},//[]string{},
 		[]string{plugin.SnapGOBContentType},
 		plugin.Unsecure(true),
-		plugin.ConcurrencyCount(1),
+		plugin.ConcurrencyCount(200),
 	)
 }
 
