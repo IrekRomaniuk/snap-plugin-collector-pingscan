@@ -77,10 +77,7 @@ func (pingscan *PingscanCollector) CollectMetrics(mts []plugin.MetricType) (metr
 		ns := mt.Namespace()
 
 		val := scan.Ping(hosts)
-		/*if err != nil {
-			return nil, fmt.Errorf("Error collecting metrics: %v", err)
-		}*/
-		//fmt.Println(val)
+
 		metric := plugin.MetricType{
 			Namespace_: ns,
 			Data_:      val,
