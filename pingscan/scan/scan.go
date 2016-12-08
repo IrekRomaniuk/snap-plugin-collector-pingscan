@@ -2,7 +2,6 @@ package scan
 //Based on https://gist.github.com/kotakanbe/d3059af990252ba89a82
 import (
 	"os/exec"
-	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/targets"
 )
 
 func Ping(hosts []string) int {
@@ -22,10 +21,9 @@ func Ping(hosts []string) int {
 	//fmt.Println("sent: ", ip)
 	}
 	alives := <-doneChan
-	result := targets.DeleteEmpty(alives)
 
 	//fmt.Printf("\n%d/%d %d\n", len(result),len(hosts),concurrentMax)
-	return len(result)
+	return len(alives)
 }
 
 func sendingPing(pingChan <-chan string, pongChan chan <- string) {

@@ -20,13 +20,13 @@ limitations under the License.
 package pingscan
 
 import (
-	"fmt"
+	"errors"
+	"strings"
 	"time"
 	"github.com/intelsdi-x/snap/control/plugin"
 	"github.com/intelsdi-x/snap/control/plugin/cpolicy"
 	"github.com/intelsdi-x/snap/core"
 	"github.com/intelsdi-x/snap/core/ctypes"
-	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/targets"
 	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/scan"
 )
 const (
@@ -57,19 +57,14 @@ GetMetricTypes() is started. The input will include a slice of all the metric ty
 The output is the collected metrics as plugin.Metric and an error.
 */
 func (pingscan *PingscanCollector) CollectMetrics(mts []plugin.MetricType) (metrics []plugin.MetricType, err error) {
-	var (
-		target string
-	)
-	conf := mts[0].Config().Table()
-	targetConf, ok := conf["target"]
-	if !ok || targetConf.(ctypes.ConfigValueStr).Value == "" {
-		return nil, fmt.Errorf("target missing from config, %v", conf)
-	} else {
-		target = targetConf.(ctypes.ConfigValueStr).Value
-	}
 
-	hosts, err := targets.ReadTargets(target)
-	if err != nil { return nil, fmt.Errorf("Error reading target: %v", err) }
+	hostsStr := mts[0].Config().Table()["hosts"].(ctypes.ConfigValueStr).Value
+
+	hosts := strings.Fields(hostsStr)
+
+	if len(hosts) == 0 {
+		return nil, errors.New("No host requested to ping")
+	}
 
 	for _, mt := range mts {
 		ns := mt.Namespace()
@@ -114,7 +109,7 @@ func (pingscan *PingscanCollector) GetMetricTypes(cfg plugin.ConfigType) ([]plug
 // GetConfigPolicy returns plugin configuration
 func (pingscan *PingscanCollector) GetConfigPolicy() (*cpolicy.ConfigPolicy, error) {
 	c := cpolicy.New()
-	rule0, _ := cpolicy.NewStringRule("target", true)
+	rule0, _ := cpolicy.NewStringRule("hosts", true)
 	cp := cpolicy.NewPolicyNode()
 	cp.Add(rule0)
 	c.Add([]string{"niuk", "pingscan"}, cp)
