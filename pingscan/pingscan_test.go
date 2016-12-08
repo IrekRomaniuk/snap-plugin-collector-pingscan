@@ -77,15 +77,6 @@ func TestPingscanPlugin(t *testing.T) {
 	})
 }
 
-func TestReadTargets(t *testing.T) {
-	Convey("Read pinglist.txt from examples ", t, func() {
-	target := "../examples/pinglist.txt"
-		hosts, _ := ReadTargets(target)
-		Convey("So pinglist.txt should contain 3 items", func() {
-			So(len(hosts), ShouldEqual,1110)
-		})
-	})
-}
 
 func TestPingscanCollector_CollectMetrics(t *testing.T) {
 	cfg := setupCfg("../examples/pinglist.txt")
@@ -121,9 +112,9 @@ func TestPingscanCollector_CollectMetrics(t *testing.T) {
 	})
 }
 
-func setupCfg(target string) plugin.ConfigType {
+func setupCfg(hostsStr string) plugin.ConfigType {
 	node := cdata.NewNode()
-	node.AddItem("target", ctypes.ConfigValueStr{Value: target})
+	node.AddItem("hosts", ctypes.ConfigValueStr{Value: hostsStr})
 	return plugin.ConfigType{ConfigDataNode: node}
 }
 
