@@ -61,7 +61,7 @@ See available metrics for your system
 $ snaptel metric list
 ```
 
-Create a task manifest file and put full path to the file listing IP addresses  (example files in [examples] (https://github.com/IrekRomaniuk/snap-plugin-collector-pingscan/tree/)):
+Create a task manifest file (see below) and put full path to the [file](https://github.com/IrekRomaniuk/snap-plugin-collector-pingscan/blob/master/examples/pinglist.txt) listing IP addresses  (example files in [examples] (https://github.com/IrekRomaniuk/snap-plugin-collector-pingscan/tree/)):
 ```yaml
 version: 1
 schedule:
