@@ -71,6 +71,8 @@ func (pingscan *PingscanCollector) CollectMetrics(mts []plugin.MetricType) (metr
 	hosts, err := targets.ReadTargets(target)
 	if err != nil { return nil, fmt.Errorf("Error reading target: %v", err) }
 
+	if len(hosts) == 0 { return nil, fmt.Errorf("No host defined in file %v", target)}
+
 	for _, mt := range mts {
 		ns := mt.Namespace()
 
