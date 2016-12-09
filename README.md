@@ -47,7 +47,7 @@ Example running pingscan collector and writing data to an Influx database.
 
 Load pingscan plugin
 ```
-$ snaptel plugin load snap-plugin-collector-pingscan
+$ snaptel plugin load $GOPATH/bin/snap-plugin-collector-pingscan
 ```
 List available plugins
 ```
