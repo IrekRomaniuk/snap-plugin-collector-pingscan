@@ -79,7 +79,7 @@ func TestReadTargets(t *testing.T) {
 	target := "../examples/pinglist.txt"
 		hosts, _ := ReadTargets(target)
 		Convey("So pinglist.txt should contain 3 items", func() {
-			So(len(hosts), ShouldEqual,1110)
+			So(len(hosts), ShouldEqual,4)
 		})
 	})
 }
