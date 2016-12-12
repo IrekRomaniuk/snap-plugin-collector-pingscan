@@ -78,7 +78,7 @@ func TestReadTargets(t *testing.T) {
 	Convey("Read pinglist.txt from examples ", t, func() {
 	target := "../examples/pinglist.txt"
 		hosts, _ := ReadTargets(target)
-		Convey("So pinglist.txt should contain 3 items", func() {
+		Convey("So pinglist.txt should contain 4 items", func() {
 			So(len(hosts), ShouldEqual,4)
 		})
 	})
@@ -111,7 +111,7 @@ func TestPingcountCollector_CollectMetrics(t *testing.T) {
 			for _, m := range metrics {
 				//fmt.Println(m.Namespace()[2].Value,m.Data())
 				So(m.Namespace()[2].Value, ShouldEqual, "total-up")
-				So(m.Data(), ShouldEqual, 2) //Assuming 8.8.8.8 and 4.2.2.2 are reachable
+				So(m.Data(), ShouldEqual, 3) //Assuming 8.8.8.8 and 4.2.2.2 are reachable
 				t.Log(m.Namespace()[2].Value, m.Data())
 			}
 		})
