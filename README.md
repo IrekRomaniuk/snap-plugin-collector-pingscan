@@ -1,3 +1,4 @@
+![Alt text](https://img.shields.io/badge/version-development-red.svg)
 # snap-plugin-collector-pingscan
 This plugin counts IP addresses of responding hosts.
 
