@@ -1,6 +1,5 @@
 package scan
 
-//Based on https://gist.github.com/kotakanbe/d3059af990252ba89a82
 import (
 	"fmt"
 	"net"

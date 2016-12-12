@@ -1,7 +1,7 @@
 # snap-plugin-collector-pingscan
 This plugin counts IP addresses of responding hosts. Ping algorithm is based on [ipcalc.go GigHubGist from Kota Kanbe](https://gist.github.com/kotakanbe/d3059af990252ba89a82) 
 
-It's used in the [snap framework](http://github.com:intelsdi-x/snap).
+It's used in the [Snap framework](http://github.com:intelsdi-x/snap).
 
 1. [Getting Started](#getting-started)
   * [System Requirements](#system-requirements)
@@ -19,7 +19,7 @@ It's used in the [snap framework](http://github.com:intelsdi-x/snap).
 * [golang 1.5+](https://golang.org/dl/)  - needed only for building. See also [How to install Go language](http://ask.xmodulo.com/install-go-language-linux.html)
 
 ### Operating systems
-All OSs currently supported by snap:
+All OSs currently supported by Snap:
 * Linux/amd64
 
 ### Installation
@@ -28,7 +28,7 @@ All OSs currently supported by snap:
 $ go get -u github.com/IrekRomaniuk/snap-plugin-collector-pingscan
 ```
 ### Configuration and Usage
-* Set up the [snap framework](https://github.com/intelsdi-x/snap/blob/master/README.md#getting-started).
+* Set up the [Snap framework](https://github.com/intelsdi-x/snap/blob/master/README.md#getting-started).
 * Load the plugin and create a task, see example in [Examples](https://github.com/IrekRomaniuk/snap-plugin-collector-pingscan/tree/master/examples).
 
 ## Documentation
@@ -105,7 +105,7 @@ Watching Task (4df1ddea-11ef-49e9-867b-6f19658cf16e):
 NAMESPACE                        DATA    TIMESTAMP
 niuk/pingscan/total-up          1102    2016-12-08 14:58:54.176178073 -0500 EST
 ```
-Watch metrics in real-time using [snap plugin for Grafana] (https://blog.raintank.io/using-grafana-with-intels-snap-for-ad-hoc-metric-exploration/)
+Watch metrics in real-time using [Snap plugin for Grafana] (https://blog.raintank.io/using-grafana-with-intels-snap-for-ad-hoc-metric-exploration/)
 
 ## License
 This plugin is Open Source software released under the Apache 2.0 [License](LICENSE).
