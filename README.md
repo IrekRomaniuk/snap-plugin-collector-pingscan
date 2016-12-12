@@ -106,6 +106,7 @@ NAMESPACE                        DATA    TIMESTAMP
 niuk/pingscan/total-up          1102    2016-12-08 14:58:54.176178073 -0500 EST
 ```
 Watch metrics in real-time using [Snap plugin for Grafana] (https://blog.raintank.io/using-grafana-with-intels-snap-for-ad-hoc-metric-exploration/)
+and use InfluxDB plugin for publishing ![Alt text](examples/grafana-pingcount.JPG "Metrics published to InfluxDB")
 
 ## License
 This plugin is Open Source software released under the Apache 2.0 [License](LICENSE).
