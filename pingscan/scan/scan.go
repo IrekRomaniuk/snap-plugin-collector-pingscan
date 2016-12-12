@@ -1,5 +1,6 @@
 package scan
 //Based on https://gist.github.com/kotakanbe/d3059af990252ba89a82
+//Kota_Kanbe git branch
 import (
 	"os/exec"
 	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/targets"
