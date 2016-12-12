@@ -31,20 +31,20 @@ const (
 	target = "./examples/pinglist.txt"
 )
 
-func TestPingscanPlugin(t *testing.T) {
+func TestPingcountPlugin(t *testing.T) {
 	Convey("Meta should return metadata for the plugin", t, func() {
 		meta := Meta()
 		So(meta.Name, ShouldResemble, pluginName )
 		So(meta.Version, ShouldResemble, pluginVersion)
 		So(meta.Type, ShouldResemble, plugin.CollectorPluginType)
 	})
-	Convey("Create Pingscan Collector", t, func() {
+	Convey("Create Pingcount Collector", t, func() {
 		collector := New()
-		Convey("So Pingscan collector should not be nil", func() {
+		Convey("So Pingcount collector should not be nil", func() {
 			So(collector, ShouldNotBeNil)
 		})
-		Convey("So Pingscan collector should be of Pingscan type", func() {
-			So(collector, ShouldHaveSameTypeAs, &PingscanCollector{})
+		Convey("So Pingcount collector should be of Pingcount type", func() {
+			So(collector, ShouldHaveSameTypeAs, &PingcountCollector{})
 		})
 		Convey("collector.GetConfigPolicy() should return a config policy", func() {
 			configPolicy, _ := collector.GetConfigPolicy()
@@ -84,9 +84,9 @@ func TestReadTargets(t *testing.T) {
 	})
 }
 
-func TestPingscanCollector_CollectMetrics(t *testing.T) {
+func TestPingcountCollector_CollectMetrics(t *testing.T) {
 	cfg := setupCfg("../examples/pinglist.txt")
-	Convey("Pingscan collector", t, func() {
+	Convey("Pingcount collector", t, func() {
 		p := New()
 		mt, err := p.GetMetricTypes(cfg)
 		if err != nil {
@@ -97,7 +97,7 @@ func TestPingscanCollector_CollectMetrics(t *testing.T) {
 			mts := []plugin.MetricType{
 				plugin.MetricType{
 					Namespace_: core.NewNamespace(
-						"niuk", "pingscan", "total-up"),
+						"niuk", "pingcount", "total-up"),
 					Config_: cfg.ConfigDataNode,
 				},
 			}
@@ -107,7 +107,7 @@ func TestPingscanCollector_CollectMetrics(t *testing.T) {
 			So(metrics, ShouldNotBeNil)
 			So(len(metrics), ShouldEqual, 1)
 			So(metrics[0].Namespace()[0].Value, ShouldEqual, "niuk")
-			So(metrics[0].Namespace()[1].Value, ShouldEqual, "pingscan")
+			So(metrics[0].Namespace()[1].Value, ShouldEqual, "pingcount")
 			for _, m := range metrics {
 				//fmt.Println(m.Namespace()[2].Value,m.Data())
 				So(m.Namespace()[2].Value, ShouldEqual, "total-up")

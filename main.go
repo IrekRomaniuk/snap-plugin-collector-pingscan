@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan"
+	"github.com/IrekRomaniuk/snap-plugin-collector-pingcount/pingcount"
 	"github.com/intelsdi-x/snap/control/plugin"
 )
 
@@ -29,5 +29,5 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Plugin must be run as root\n")
 		os.Exit(1)
 	}
-	plugin.Start(pingscan.Meta(), pingscan.New(), os.Args[1])
+	plugin.Start(pingcount.Meta(), pingcount.New(), os.Args[1])
 }

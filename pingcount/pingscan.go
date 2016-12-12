@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package pingscan
+package pingcount
 
 import (
 	"fmt"
@@ -23,13 +23,13 @@ import (
 	"github.com/intelsdi-x/snap/control/plugin/cpolicy"
 	"github.com/intelsdi-x/snap/core"
 	"github.com/intelsdi-x/snap/core/ctypes"
-	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/targets"
-	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/scan"
+	"github.com/IrekRomaniuk/snap-plugin-collector-pingcount/pingcount/targets"
+	"github.com/IrekRomaniuk/snap-plugin-collector-pingcount/pingcount/scan"
 )
 const (
 	vendor        = "niuk"
-	fs            = "pingscan"
-	pluginName    = "pingscan"
+	fs            = "pingcount"
+	pluginName    = "pingcount"
 	pluginVersion = 1
 	pluginType    = plugin.CollectorPluginType
 )
@@ -38,12 +38,12 @@ var (
 		"total-up",
 	}
 )
-type PingscanCollector struct {
+type PingcountCollector struct {
 }
 
-func New() *PingscanCollector {
-	pingscan := &PingscanCollector{}
-	return pingscan
+func New() *PingcountCollector {
+	pingcount := &PingcountCollector{}
+	return pingcount
 }
 
 /*  CollectMetrics collects metrics for testing.
@@ -53,7 +53,7 @@ GetMetricTypes() is started. The input will include a slice of all the metric ty
 
 The output is the collected metrics as plugin.Metric and an error.
 */
-func (pingscan *PingscanCollector) CollectMetrics(mts []plugin.MetricType) (metrics []plugin.MetricType, err error) {
+func (pingcount *PingcountCollector) CollectMetrics(mts []plugin.MetricType) (metrics []plugin.MetricType, err error) {
 	var (
 		target string
 	)
@@ -96,11 +96,11 @@ func (pingscan *PingscanCollector) CollectMetrics(mts []plugin.MetricType) (metr
 
 	The metrics returned will be advertised to users who list all the metrics and will become targetable by tasks.
 */
-func (pingscan *PingscanCollector) GetMetricTypes(cfg plugin.ConfigType) ([]plugin.MetricType, error) {
+func (pingcount *PingcountCollector) GetMetricTypes(cfg plugin.ConfigType) ([]plugin.MetricType, error) {
 	mts := []plugin.MetricType{}
 	for _, metricName := range metricNames {
 		mts = append(mts, plugin.MetricType{
-			Namespace_: core.NewNamespace("niuk", "pingscan", metricName),
+			Namespace_: core.NewNamespace("niuk", "pingcount", metricName),
 		})
 	}
 	return mts, nil
@@ -108,12 +108,12 @@ func (pingscan *PingscanCollector) GetMetricTypes(cfg plugin.ConfigType) ([]plug
 
 
 // GetConfigPolicy returns plugin configuration
-func (pingscan *PingscanCollector) GetConfigPolicy() (*cpolicy.ConfigPolicy, error) {
+func (pingcount *PingcountCollector) GetConfigPolicy() (*cpolicy.ConfigPolicy, error) {
 	c := cpolicy.New()
 	rule0, _ := cpolicy.NewStringRule("target", true)
 	cp := cpolicy.NewPolicyNode()
 	cp.Add(rule0)
-	c.Add([]string{"niuk", "pingscan"}, cp)
+	c.Add([]string{"niuk", "pingcount"}, cp)
 	return c, nil
 }
 
