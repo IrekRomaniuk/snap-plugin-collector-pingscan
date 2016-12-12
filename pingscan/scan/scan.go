@@ -1,52 +1,44 @@
 package scan
+
 //Based on https://gist.github.com/kotakanbe/d3059af990252ba89a82
 import (
-	"os/exec"
-	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/targets"
+	"fmt"
+	"net"
+	"os"
+	"sync/atomic"
+
+	"time"
+
+	fastping "github.com/tatsushid/go-fastping"
 )
 
+// Ping takes a slice of IP addresses and return an int count of those that
+// respond to ping.  The MaxRTT is set to 4 seconds.
 func Ping(hosts []string) int {
-	concurrentMax := 200
-	pingChan := make(chan string, concurrentMax)
-	pongChan := make(chan string, len(hosts))
-	doneChan := make(chan []string)
-	//fmt.Printf("concurrentMax=%d hosts=%d -> %s...%s\n", concurrentMax, len(hosts), hosts[0], hosts[len(hosts) - 1])
-	for i := 0; i < concurrentMax; i++ {
-		go sendingPing(pingChan, pongChan)
+	p := fastping.NewPinger()
+	p.MaxRTT = 4 * time.Second
+	var successCount, failCount uint64
+	p.OnRecv = func(addr *net.IPAddr, rtt time.Duration) {
+		atomic.AddUint64(&successCount, 1)
+		// fmt.Printf("IP Addr: %s receive, RTT: %v  successCount: %v \n", addr.String(), rtt, successCount)
 	}
-
-	go receivePong(len(hosts), pongChan, doneChan)
+	p.OnIdle = func() {
+		atomic.AddUint64(&failCount, 1)
+		// fmt.Println("timed out - finish")
+	}
 
 	for _, ip := range hosts {
-		pingChan <- ip
-	//fmt.Println("sent: ", ip)
-	}
-	alives := <-doneChan
-	result := targets.DeleteEmpty(alives)
-
-	//fmt.Printf("\n%d/%d %d\n", len(result),len(hosts),concurrentMax)
-	return len(result)
-}
-
-func sendingPing(pingChan <-chan string, pongChan chan <- string) {
-	for ip := range pingChan {
-		_, err := exec.Command("ping", "-c", "1", "-w", "1", ip).Output()
-		if err == nil {
-			pongChan <- ip
-			//fmt.Printf("%s is alive\n", ip)
-		} else {
-			pongChan <- ""
-			//fmt.Printf("%s is dead\n", ip)
+		// fmt.Printf("adding ip: %v \n", ip)
+		err := p.AddIP(ip)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error adding IP (%v): %v", ip, err)
 		}
 	}
-}
 
-func receivePong(pongNum int, pongChan <-chan string, doneChan chan <- []string) {
-	var alives []string
-	for i := 0; i < pongNum; i++ {
-		ip := <-pongChan
-		//fmt.Println("received: ", ip)
-		alives = append(alives, ip)
+	err := p.Run()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error during Ping.Run(): %v", err)
 	}
-	doneChan <- alives
+
+	return int(successCount)
 }

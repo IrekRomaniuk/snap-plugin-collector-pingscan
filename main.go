@@ -17,11 +17,17 @@ limitations under the License.
 package main
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan"
 	"github.com/intelsdi-x/snap/control/plugin"
-	"os"
 )
 
 func main() {
-	plugin.Start(pingscan.Meta(), pingscan.New(), os.Args[1],)
+	if os.Geteuid() != 0 {
+		fmt.Fprintf(os.Stderr, "Plugin must be run as root\n")
+		os.Exit(1)
+	}
+	plugin.Start(pingscan.Meta(), pingscan.New(), os.Args[1])
 }
