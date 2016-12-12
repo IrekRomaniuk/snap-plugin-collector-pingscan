@@ -9,5 +9,5 @@ workflow:
     metrics:
       /niuk/pingcount/total-up: {}
     config:
-      /niuk/pingscan:
+      /niuk/pingcount:
         target: "/home/global/path/examples/pinglist.txt"
