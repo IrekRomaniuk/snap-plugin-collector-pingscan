@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package pingscan
+package pingcount
 
 import (
 	"testing"
@@ -24,7 +24,7 @@ import (
 	"github.com/intelsdi-x/snap/core/cdata"
 	"github.com/intelsdi-x/snap/core/ctypes"
 	. "github.com/smartystreets/goconvey/convey"
-	. "github.com/IrekRomaniuk/snap-plugin-collector-pingscan/pingscan/targets"
+	. "github.com/IrekRomaniuk/snap-plugin-collector-pingcount/pingcount/targets"
 )
 
 const (
@@ -55,8 +55,8 @@ func TestPingcountPlugin(t *testing.T) {
 			Convey("So config policy should be a cpolicy.ConfigPolicy", func() {
 				So(configPolicy, ShouldHaveSameTypeAs, &cpolicy.ConfigPolicy{})
 			})
-			Convey("So config policy namespace should be /niuk/pingscan", func() {
-				conf := configPolicy.Get([]string{"niuk", "pingscan"})
+			Convey("So config policy namespace should be /niuk/pingcount", func() {
+				conf := configPolicy.Get([]string{"niuk", "pingcount"})
 				So(conf, ShouldNotBeNil)
 				So(conf.HasRules(), ShouldBeTrue)
 				tables := conf.RulesAsTable()
