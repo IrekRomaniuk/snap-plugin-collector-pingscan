@@ -7,7 +7,7 @@ max-failures: 10
 workflow:
   collect:
     metrics:
-      /niuk/pingscan/total-up: {}
+      /niuk/pingcount/total-up: {}
     config:
       /niuk/pingscan:
         target: "/home/global/path/examples/pinglist.txt"
