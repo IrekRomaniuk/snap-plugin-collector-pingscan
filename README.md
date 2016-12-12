@@ -13,7 +13,8 @@ It's used in the [Snap framework](http://github.com:intelsdi-x/snap).
   * [Collected Metrics](#collected-metrics)
   * [Examples](#examples)
 3. [License](#license-and-authors)
-4. [Acknowledgements](#acknowledgements)
+4. [Releases] (#Releases)
+5. [Acknowledgements](#acknowledgements)
 
 ## Getting Started
 ### System Requirements
