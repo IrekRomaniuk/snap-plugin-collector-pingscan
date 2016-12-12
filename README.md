@@ -1,5 +1,5 @@
 # snap-plugin-collector-pingscan
-This plugin counts IP addresses of responding hosts. Ping algorithm is based on [ipcalc.go GigHubGist from Kota Kanbe](https://gist.github.com/kotakanbe/d3059af990252ba89a82) 
+This plugin counts IP addresses of responding hosts.
 
 It's used in the [Snap framework](http://github.com:intelsdi-x/snap).
 
